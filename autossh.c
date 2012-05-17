@@ -154,7 +154,7 @@ int	ssh_wait(int options);
 void	ssh_kill(void);
 int	conn_test(int sock, char *host, char *write_port);
 int	conn_poll_for_accept(int sock, struct pollfd *pfd);
-int	conn_send_and_receive(char *rp, char *wp, size_t len, 
+int	conn_send_and_receive(char *rp, char *wp, size_t len,
 	    struct pollfd *pfd, int ntopoll);
 #ifndef HAVE_ADDRINFO
 void	conn_addr(char *host, char *port, struct sockaddr_in *resp);
@@ -178,7 +178,7 @@ void
 usage(int code)
 {
 	fprintf(code ? stderr : stdout,
-	    "usage: %s [-V] [-M monitor_port[:echo_port]] [-f] [SSH_OPTIONS]\n", 
+	    "usage: %s [-V] [-M monitor_port[:echo_port]] [-f] [SSH_OPTIONS]\n",
 	    __progname);
 	if (code) {
 		fprintf(stderr, "\n");
@@ -254,9 +254,7 @@ usage(int code)
 	exit(code);
 }
 
-int
-main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 	int	i;
 	int	n;
 	int	ch;
@@ -275,7 +273,7 @@ main(int argc, char **argv)
 
 #ifndef HAVE___PROGNAME
 	__progname = "autossh";
-#endif	
+#endif
 
 	/* 
 	 * set up options from environment
@@ -494,9 +492,7 @@ main(int argc, char **argv)
 /*
  * Add an argument to the argument array.
  */
-void
-add_arg(char *s) 
-{
+void add_arg(char *s) {
 	char	*p;
 	size_t	len;
 	static	size_t newamax = START_AV_SZ;
@@ -509,19 +505,20 @@ add_arg(char *s)
 		newav = malloc(START_AV_SZ * sizeof(char *));
 		if (!newav)
 			xerrlog(LOG_ERR, "malloc: %s", strerror(errno));
-	} else if (newac >= newamax-1) {
+	}
+  else if (newac >= newamax-1) {
 		newamax *= 2;
 		newav = realloc(newav, newamax * sizeof(char *));
 		if (!newav)
 			xerrlog(LOG_ERR, "realloc: %s", strerror(errno));
 	}
-	p = malloc(len+1);		
+	p = malloc(len+1);
 	if (!p) xerrlog(LOG_ERR, "malloc: %s", strerror(errno));
 	memmove(p, s, len);
 	p[len] = '\0';
 	newav[newac++] = p;
 	newav[newac] = NULL;
-	
+
 	return;
 }
 
@@ -536,7 +533,6 @@ strip_arg(char *arg, char ch, char *opts)
 {
 	char *f, *o;
 	size_t len;
-	
 
 	if (arg[0] == '-' && arg[1] != '\0') {
 		for (len = strlen(arg), f = arg; *f != '\0'; f++, len--) {
@@ -567,9 +563,7 @@ strip_arg(char *arg, char ch, char *opts)
 /* 
  * Ugly, but as we've used so many command args...
  */
-void
-get_env_args(void)
-{
+void get_env_args(void) {
 	char	*s;
 	char	*t;
 
@@ -915,8 +909,7 @@ exceeded_lifetime(void)
  * it (ssh) was signalled, so restarts it.
  *
  */
-int
-ssh_wait(int options) {
+int ssh_wait(int options) {
 
 	int	status;
 	int	evalue;
