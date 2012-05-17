@@ -130,6 +130,8 @@ char	*ssh_path = SSH_PATH;	/* default path to ssh */
 int	start_count;		/* # of times exec()d ssh */
 time_t	start_time;		/* time we exec()d ssh */
 
+int ssh_exit; /* the exit status of the ssh processs */
+
 #if defined(__CYGWIN__)
 int	ntservice;		/* set some stuff for running as nt service */
 #endif
@@ -196,6 +198,8 @@ usage(int code)
 		    "       pass it to ssh.)\n");
 		fprintf(stderr, 
 		    "    -V print autossh version and exit.\n");
+		fprintf(stderr, 
+		    "    -t exit with the exit code of ran command.\n");
 		fprintf(stderr, "\n");
 		fprintf(stderr, "Environment variables are:\n");
 		fprintf(stderr, 
@@ -270,6 +274,7 @@ int main(int argc, char **argv) {
 #if defined(__CYGWIN__)
 	int	sawoptionn = 0;
 #endif
+	int	returnsshexit = 0;
 
 #ifndef HAVE___PROGNAME
 	__progname = "autossh";
@@ -302,6 +307,9 @@ int main(int argc, char **argv) {
 			sawoptionn = 1;
 			break;
 #endif
+    case 't':
+      returnsshexit = 1;
+      break;
 		case '?':
 			usage(1);
 			break;
@@ -486,7 +494,12 @@ int main(int argc, char **argv) {
 	if (logtype & L_SYSLOG)
 		closelog();
 
-	exit(0);
+  if (returnsshexit == 1) {
+    exit(ssh_exit);
+  }
+  else {
+    exit(0);
+  }
 }
 
 /*
@@ -947,6 +960,7 @@ int ssh_wait(int options) {
 					    "ssh exited prematurely "
 					    "with status %d; %s exiting", 
 					    evalue, __progname);
+          ssh_exit = evalue;
 					return P_EXIT;
 				}
 			}
