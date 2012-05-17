@@ -1,0 +1,10 @@
+#!/bin/bash
+AUTOSSH="/usr/local/src/autossh-1.4c/autossh"
+HOST="localhost"
+USER="guest"
+
+export AUTOSSH_LOGFILE="/tmp/autossh.log"
+export AUTOSSH_DEBUG=yes
+export AUTOSSH_PORT=20000
+
+${AUTOSSH} "${USER}@${HOST}" "$@"
