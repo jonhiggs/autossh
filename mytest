@@ -7,4 +7,4 @@ export AUTOSSH_LOGFILE="/tmp/autossh.log"
 export AUTOSSH_DEBUG=yes
 export AUTOSSH_PORT=20000
 
-${AUTOSSH} "${USER}@${HOST}" "$@"
+${AUTOSSH} -t "${USER}@${HOST}" "$@"
