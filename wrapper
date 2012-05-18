@@ -4,8 +4,8 @@ if [ $1 == '-t' ]; then ATTR="-t "; shift; fi
 ADDR=$1; shift
 
 export AUTOSSH="/usr/local/src/autossh-1.4c/autossh"
-export AUTOSSH_LOGFILE="/tmp/autossh.log"
-export AUTOSSH_DEBUG=yes
+#export AUTOSSH_LOGFILE="/tmp/autossh.log"
+#export AUTOSSH_DEBUG=no
 export AUTOSSH_PORT=20000
 
 ${AUTOSSH} ${ATTR} "${ADDR}" "$@"
