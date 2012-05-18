@@ -11,4 +11,4 @@ export AUTOSSH="/usr/local/src/autossh-1.4c/autossh"
 #export AUTOSSH_DEBUG=no
 export AUTOSSH_PORT=20000
 
-${AUTOSSH} ${ATTR} "${ADDR}" ${SSH_ATTR} "$@"
+${AUTOSSH} ${ATTR} "${ADDR}" ${SSH_ATTR} -- "$@"
