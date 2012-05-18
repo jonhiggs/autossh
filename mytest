@@ -1,10 +1,10 @@
 #!/bin/bash
-AUTOSSH="/usr/local/src/autossh-1.4c/autossh"
-HOST="localhost"
-USER="guest"
+ADDR=$1; shift
+
+export AUTOSSH="/usr/local/src/autossh-1.4c/autossh"
 
 export AUTOSSH_LOGFILE="/tmp/autossh.log"
 export AUTOSSH_DEBUG=yes
 export AUTOSSH_PORT=20000
 
-${AUTOSSH} -t "${USER}@${HOST}" "$@"
+${AUTOSSH} -t "${ADDR}" "$@"
